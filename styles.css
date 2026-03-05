@@ -156,11 +156,6 @@ img {
   z-index: 70;
 }
 
-.nav-dropdown:hover .nav-dropdown-menu {
-  display: grid;
-  gap: 0.2rem;
-}
-
 .nav-dropdown-menu a {
   border-bottom: none;
   border-radius: 8px;
@@ -183,9 +178,19 @@ img {
   color: var(--brand);
 }
 
-.nav-dropdown:hover .nav-dropdown-toggle::after,
 .nav-dropdown.is-active .nav-dropdown-toggle::after {
   transform: rotate(180deg) translateY(1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-dropdown:hover .nav-dropdown-menu {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .nav-dropdown:hover .nav-dropdown-toggle::after {
+    transform: rotate(180deg) translateY(1px);
+  }
 }
 
 .nav-toggle {
