@@ -3,6 +3,7 @@ const filterButtons = document.querySelectorAll(".filter-btn");
 const showcaseCards = document.querySelectorAll(".showcase-card");
 const navToggle = document.getElementById("navToggle");
 const primaryNav = document.getElementById("primaryNav");
+const navDropdowns = document.querySelectorAll(".nav-dropdown");
 const submissionNavItems = document.querySelectorAll(".submission-nav-item");
 const submissionPanels = document.querySelectorAll(".submission-panel");
 
@@ -22,15 +23,54 @@ if (backToTop) {
 }
 
 if (navToggle && primaryNav) {
+  const closeMobileDropdowns = () => {
+    navDropdowns.forEach((dropdown) => {
+      dropdown.classList.remove("is-active");
+      const toggle = dropdown.querySelector(".nav-dropdown-toggle");
+      if (toggle) {
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  };
+
   navToggle.addEventListener("click", () => {
     const isOpen = primaryNav.classList.toggle("is-open");
     navToggle.setAttribute("aria-expanded", String(isOpen));
     navToggle.textContent = isOpen ? "Close" : "Menu";
+    if (!isOpen) {
+      closeMobileDropdowns();
+    }
+  });
+
+  navDropdowns.forEach((dropdown) => {
+    const toggle = dropdown.querySelector(".nav-dropdown-toggle");
+    if (!toggle) return;
+
+    toggle.addEventListener("click", (event) => {
+      if (window.innerWidth > 820) return;
+      event.stopPropagation();
+
+      const isActive = dropdown.classList.toggle("is-active");
+      toggle.setAttribute("aria-expanded", String(isActive));
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (window.innerWidth > 820) return;
+    navDropdowns.forEach((dropdown) => {
+      if (dropdown.contains(event.target)) return;
+      dropdown.classList.remove("is-active");
+      const toggle = dropdown.querySelector(".nav-dropdown-toggle");
+      if (toggle) {
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    });
   });
 
   primaryNav.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
       if (!primaryNav.classList.contains("is-open")) return;
+      closeMobileDropdowns();
       primaryNav.classList.remove("is-open");
       navToggle.setAttribute("aria-expanded", "false");
       navToggle.textContent = "Menu";
@@ -39,6 +79,7 @@ if (navToggle && primaryNav) {
 
   window.addEventListener("resize", () => {
     if (window.innerWidth > 820) {
+      closeMobileDropdowns();
       primaryNav.classList.remove("is-open");
       navToggle.setAttribute("aria-expanded", "false");
       navToggle.textContent = "Menu";

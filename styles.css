@@ -347,6 +347,15 @@ img {
   color: #34554f;
 }
 
+.staging-inquiry-btn {
+  margin-top: 1.4rem;
+}
+
+.nav-dropdown.is-active .nav-dropdown-menu {
+  display: grid;
+  gap: 0.2rem;
+}
+
 .testimonials {
   background: #ece7df;
 }
