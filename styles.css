@@ -203,6 +203,12 @@ img {
   font-weight: 600;
 }
 
+.nav-toggle,
+.nav-dropdown-toggle,
+.site-nav a {
+  touch-action: manipulation;
+}
+
 .hero,
 .page-hero {
   position: relative;
